@@ -12,3 +12,14 @@ def exibir_menu
     puts "=========================================="
     print "Escolha uma opção: "
 end
+
+def criar_turma
+    print "Nome da turma: "
+    nome = gets.chomp
+    print "Código da turma: "
+    codigo = gets.chomp
+    print("Nomr do professor: ")
+    professor = gets.chomp
+
+    Turma.new(nome, codigo, professor)
+end
