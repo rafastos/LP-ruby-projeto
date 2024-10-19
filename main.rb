@@ -18,7 +18,7 @@ def criar_turma
     nome = gets.chomp
     print "Código da turma: "
     codigo = gets.chomp
-    print("Nomr do professor: ")
+    print("Nome do professor: ")
     professor = gets.chomp
 
     Turma.new(nome, codigo, professor)
@@ -76,3 +76,5 @@ def main
       end
     end
 end
+
+main
