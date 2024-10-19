@@ -1,0 +1,65 @@
+---
+- !ruby/object:Turma
+  nome: Linguagem de Programação
+  codigo: LP2024
+  professor: Antonio Silva
+  alunos:
+    - João Paulo Santos
+    - Maria Clara Oliveira
+    - Pedro Henrique Lima
+    - Ana Beatriz Costa
+    - Lucas Ferreira
+
+- !ruby/object:Turma
+  nome: Estrutura de Dados
+  codigo: ED2024
+  professor: Carla Rodrigues
+  alunos:
+    - Gabriel Almeida
+    - Julia Pereira
+    - Matheus Santos
+    - Joana Lima
+    - Rafael Souza
+    - Laura Martins
+
+- !ruby/object:Turma
+  nome: Banco de Dados
+  codigo: BD2024
+  professor: Roberto Carlos
+  alunos:
+    - Felipe Costa
+    - Mariana Silva
+    - Bruno Oliveira
+    - Camila Santos
+    - Diego Ferreira
+    - Larissa Lima
+    - Thiago Pereira
+
+- !ruby/object:Turma
+  nome: Programação Web
+  codigo: WEB2024
+  professor: Patricia Mendes
+  alunos:
+    - Leonardo Alves
+    - Amanda Cardoso
+    - Victor Hugo
+    - Beatriz Martins
+    - Guilherme Santos
+    - Carolina Lima
+    - Daniel Costa
+    - Fernanda Oliveira
+
+- !ruby/object:Turma
+  nome: Inteligência Artificial
+  codigo: IA2024
+  professor: Fernando Gomes
+  alunos:
+    - Ricardo Silva
+    - Gabriela Santos
+    - Lucas Mendes
+    - Sofia Pereira
+    - Miguel Costa
+    - Valentina Lima
+    - Eduardo Oliveira
+    - Luisa Ferreira
+    - Henrique Almeida
