@@ -51,9 +51,13 @@ class GerenciadorTurmas
 
   def carregar_turmas
     if File.exist?(@arquivo)
-      YAML.load(File.read(@arquivo)) || []
+      YAML.safe_load(File.read(@arquivo), permitted_classes: [Turma])
     else
       []
     end
+  rescue => e
+    puts "Erro ao carregar o arquivo: #{e.message}"
+    puts "Iniciando com lista vazia..."
+    []
   end
 end
