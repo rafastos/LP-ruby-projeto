@@ -1,24 +1,23 @@
 require 'yaml'
 require_relative 'turma'
+require_relative 'aluno'
 
-# Define a classe GerenciadorTurmas
 class GerenciadorTurmas
-  # Define acessores para o atributo turmas
-  attr_accessor :turmas
+  attr_accessor :turmas, :alunos
 
   # Método construtor
-  def initialize(arquivo = 'turmas.yml')
-    @arquivo = arquivo
+  def initialize(arquivo_turmas = 'turmas.yml', arquivo_alunos = 'alunos.yml')
+    @arquivo_turmas = arquivo_turmas
+    @arquivo_alunos = arquivo_alunos
     @turmas = carregar_turmas
+    @alunos = carregar_alunos
   end
 
   # Método para adicionar uma nova turma
   def adicionar_turma(turma)
-    # Verifica se já existe uma turma com o mesmo código
     if @turmas.any? { |t| t.codigo == turma.codigo }
       puts "Já existe uma turma com este código."
     else
-      # Adiciona a turma, salva e exibe mensagem de sucesso
       @turmas << turma
       salvar_turmas
       puts "Nova turma adicionada com sucesso!"
@@ -27,16 +26,19 @@ class GerenciadorTurmas
 
   # Método para remover uma turma pelo código
   def remover_turma_por_codigo(codigo)
-    # Procura a turma pelo código
     turma = @turmas.find { |t| t.codigo == codigo }
     if turma
-      # Remove a turma, salva as alterações e exibe mensagem
       @turmas.delete(turma)
       salvar_turmas
       puts "Turma excluída e novo arquivo salvo."
     else
       puts "Turma não encontrada."
     end
+  end
+
+  # Método para encontrar um aluno pelo nome
+  def encontrar_aluno_por_nome(nome_aluno)
+    @alunos.find { |a| a.nome == nome_aluno }
   end
 
   # Método para encontrar uma turma pelo nome
@@ -51,29 +53,59 @@ class GerenciadorTurmas
       puts "Turma: #{turma.nome}"
       puts "Código: #{turma.codigo}"
       puts "Professor(a): #{turma.professor}"
-      puts "Alunos: #{turma.alunos.join(', ')}"
+      puts "Alunos:"
+      turma.alunos.each do |aluno|
+        puts "Notas de #{aluno.nome}: #{aluno.notas.inspect}"
+        media = aluno.calcular_media
+        puts "  - #{aluno.nome} (Média: #{media.round(2)})"
+      end
       puts
     end
   end
 
-  # Método para salvas as turmas no arquivo YAML
+  # Método para salvar as turmas no arquivo YAML
   def salvar_turmas
-    File.open(@arquivo, 'w') { |f| f.write(YAML.dump(@turmas)) }
+    File.open(@arquivo_turmas, 'w') { |f| f.write(YAML.dump(@turmas)) }
   end
 
   # Método para carregar as turmas do arquivo YAML
   def carregar_turmas
-    if File.exist?(@arquivo)
-      # Carrega as turmas do arquivo, permitindo a classe Turma
-      YAML.safe_load(File.read(@arquivo), permitted_classes: [Turma])
+    if File.exist?(@arquivo_turmas)
+      YAML.safe_load(File.read(@arquivo_turmas), permitted_classes: [Turma, Aluno])
     else
-      # Retorna um vetor vazio se o arquivo não existir
       []
     end
   rescue => e
-    # Em caso de erro, exibe a mensagem e inicia com lista vazia
     puts "Erro ao carregar o arquivo: #{e.message}"
     puts "Iniciando com lista vazia..."
     []
+  end
+
+  # Método para salvar os alunos no arquivo YAML
+  def salvar_alunos
+    File.open(@arquivo_alunos, 'w') { |f| f.write(YAML.dump(@alunos)) }
+  end
+
+  # Método para carregar os alunos do arquivo YAML
+  def carregar_alunos
+    if File.exist?(@arquivo_alunos)
+      YAML.safe_load(File.read(@arquivo_alunos), permitted_classes: [Aluno])
+    else
+      []
+    end
+  rescue => e
+    puts "Erro ao carregar o arquivo: #{e.message}"
+    puts "Iniciando com lista vazia..."
+    []
+  end
+
+  def cadastrar_aluno(aluno)
+    if @alunos.any? { |a| a.nome == aluno.nome }
+      puts "Já existe um aluno com este nome."
+    else
+      @alunos << aluno
+      salvar_alunos
+      puts "Aluno #{aluno.nome} cadastrado com sucesso!"
+    end
   end
 end

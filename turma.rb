@@ -1,4 +1,5 @@
 require 'yaml'
+require_relative 'aluno'
 
 # Define a classe Turma
 class Turma
@@ -14,13 +15,13 @@ class Turma
   end
 
   # Método para adicionar um aluno à turma
-  def adicionar_aluno(nome_aluno)
+  def adicionar_aluno(aluno)
     # Adiciona o aluno apenas se ele ainda não estiver na lista
-    @alunos << nome_aluno unless @alunos.include?(nome_aluno)
+    @alunos << aluno unless @alunos.any? { |a| a.nome == aluno.nome }
   end
 
   # Método para remover um aluno da turma
   def remover_aluno(nome_aluno)
-    @alunos.delete(nome_aluno)
+    @alunos.reject! { |a| a.nome == nome_aluno }
   end
 end
